@@ -54,3 +54,102 @@ table { width: 100%; border-collapse: collapse; }
             border-radius: 4px;
             cursor: pointer;
         }
+
+        .comment-btn {
+            background-color: #FF9800;
+            color: white;
+            border: none;
+        }
+        
+        /* Comment modal styles */
+        #commentModal .modal-content {
+            width: 80%;
+            max-width: 500px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Comments Section Styles */
+.comments-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.comments-section h4 {
+    margin-bottom: 15px;
+}
+
+.comment {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.comment-date {
+    font-style: italic;
+}
+
+.comment-text {
+    padding: 5px 0;
+    white-space: pre-wrap;
+}
+
+/* Comment Form Styles */
+#commentForm {
+    margin-top: 20px;
+}
+
+#commentForm textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 80px;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

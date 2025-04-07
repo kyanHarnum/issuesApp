@@ -1,5 +1,6 @@
 <?php
 session_start();
+$is_admin = ($_SESSION['user_admin'] === 'Yes');
 require 'database.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -63,13 +64,21 @@ $result = $conn->query($query);
                         '<?php echo htmlspecialchars($row['fname'] . ' ' . $row['lname']); ?>',
                         '<?php echo htmlspecialchars($row['open_date']); ?>',
                         '<?php echo htmlspecialchars($row['status']); ?>',
-                        '<?php echo $row['close_date'] ? htmlspecialchars($row['close_date']) : 'Not resolved yet'; ?>'
+                        '<?php echo $row['close_date'] ? htmlspecialchars($row['close_date']) : 'Not resolved yet'; ?>',
+                        '<?php echo $row['id']; ?>'
                     )">Read</button>
-                    <a href="edit_issue.php?id=<?php echo $row['id']; ?>" class="action-btn edit-btn">Edit</a>
-                    <form method="post" style="display:inline;">
-                        <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
-                        <button type="submit" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this issue?')">Delete</button>
-                    </form>
+
+                    <?php if ($is_admin): ?>
+                        <a href="edit_issue.php?id=<?php echo $row['id']; ?>" class="action-btn edit-btn">Edit</a>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this issue?')">Delete</button>
+                        </form>
+
+                    <?php endif; ?>
+
+                    <button class="action-btn comment-btn" onclick="showCommentForm(<?php echo $row['id']; ?>)">Comment</button>
+
                 </td>
             </tr>
         <?php } ?>
@@ -115,38 +124,114 @@ $result = $conn->query($query);
                 <span class="detail-label">Close Date:</span>
                 <span id="modalCloseDate"></span>
             </div>
+
+            <!-- Comments Section -->
+        <div class="comments-section">
+            <h4>Comments</h4>
+            <div id="commentsContainer"></div>
+
+            <form id="commentForm" onsubmit="return submitComment(event)">
+                <input type="hidden" id="commentIssueId" name="issue_id">
+                <div class="form-group">
+                    <textarea id="commentText" name="comment_text" placeholder="Add a comment..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+            </div>
         </div>
     </div>
 
     <script>
-        // Get the modal
-        var modal = document.getElementById("issueModal");
+    // Get the modal
+    var modal = document.getElementById("issueModal");
+    var currentIssueId = null;
 
-        // Function to show issue details in modal
-        function showIssueDetails(shortDesc, longDesc, project, priority, creator, openDate, status, closeDate) {
-            document.getElementById("modalShortDesc").innerText = shortDesc;
-            document.getElementById("modalLongDesc").innerText = longDesc;
-            document.getElementById("modalProject").innerText = project;
-            document.getElementById("modalPriority").innerText = priority;
-            document.getElementById("modalCreator").innerText = creator;
-            document.getElementById("modalOpenDate").innerText = openDate;
-            document.getElementById("modalStatus").innerText = status;
-            document.getElementById("modalCloseDate").innerText = closeDate;
-            
-            modal.style.display = "block";
-        }
+    // Function to show issue details in modal
+    function showIssueDetails(shortDesc, longDesc, project, priority, creator, openDate, status, closeDate, issueId) {
+        document.getElementById("modalShortDesc").innerText = shortDesc;
+        document.getElementById("modalLongDesc").innerText = longDesc;
+        document.getElementById("modalProject").innerText = project;
+        document.getElementById("modalPriority").innerText = priority;
+        document.getElementById("modalCreator").innerText = creator;
+        document.getElementById("modalOpenDate").innerText = openDate;
+        document.getElementById("modalStatus").innerText = status;
+        document.getElementById("modalCloseDate").innerText = closeDate;
+        document.getElementById("commentIssueId").value = issueId;
+        
+        currentIssueId = issueId;
+        loadComments(issueId);
+        
+        modal.style.display = "block";
+    }
 
-        // Function to close the modal
-        function closeModal() {
-            modal.style.display = "none";
-        }
+    // Function to load comments for an issue
+    function loadComments(issueId) {
+        fetch('get_comments.php?issue_id=' + issueId)
+            .then(response => response.json())
+            .then(comments => {
+                const container = document.getElementById('commentsContainer');
+                container.innerHTML = '';
+                
+                if (comments.length === 0) {
+                    container.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+                    return;
+                }
+                
+                comments.forEach(comment => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'comment';
+                    commentDiv.innerHTML = `
+                        <div class="comment-header">
+                            <strong>${comment.creator}</strong> 
+                            <span class="comment-date">${comment.posted_date}</span>
+                        </div>
+                        <div class="comment-text">${comment.comment_text}</div>
+                    `;
+                    container.appendChild(commentDiv);
+                });
+            })
+            .catch(error => console.error('Error loading comments:', error));
+    }
 
-        // Close the modal when clicking outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+    // Function to submit a new comment
+    function submitComment(event) {
+        event.preventDefault();
+        
+        const form = event.target;
+        const formData = new FormData(form);
+        
+        fetch('add_comment.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                form.reset();
+                loadComments(currentIssueId);
+            } else {
+                alert('Error: ' + data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while posting the comment');
+        });
+        
+        return false;
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
         }
-    </script>
+    }
+</script>
 </body>
 </html>

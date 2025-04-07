@@ -7,18 +7,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
     
     if (!empty($email) && !empty($password)) {
-        $stmt = $conn->prepare("SELECT id, fname, lname, pwd_hash, pwd_salt FROM iss_persons WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id, fname, lname, pwd_hash, pwd_salt, admin FROM iss_persons WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
         
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $fname, $lname, $pwd_hash, $pwd_salt);
+            $stmt->bind_result($id, $fname, $lname, $pwd_hash, $pwd_salt, $admin);
             $stmt->fetch();
             
             if ($pwd_hash === md5($password . $pwd_salt)) {
                 $_SESSION['user_id'] = $id;
                 $_SESSION['user_name'] = $fname . ' ' . $lname;
+                $_SESSION['user_admin'] = $admin;
                 header("Location: issues_list.php");
                 exit();
             } else {
