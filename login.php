@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db_connect.php'; // Include database connection
+require 'database.php'; // Include database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="project.css">
 </head>
 <body>
+<div class="box">
     <h2>Login to DSR</h2>
     <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
     <form method="post" action="login.php">
@@ -51,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="password" required>
         <br>
         <button type="submit">Login</button>
+</div>
+
     </form>
 </body>
 </html>

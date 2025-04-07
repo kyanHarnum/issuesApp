@@ -1,9 +1,12 @@
 <?php
-private static $dbName = 'cis355'; //connects to the database cis355 in our xampp, phpmyadmin
-private static $dbHost  'localhost'; // this is where the local host virtual machine lives, ex) localhost/phpmyadmin OR localhost/login.php
-private static $dbUsername = 'student'; //
-private static $dbUserpassword = ''; //
+$servername = "localhost";
+$username = "root"; // Default XAMPP username
+$password = ""; // Default XAMPP password is empty
+$database = "cis355";
 
-private static $connection = null;
+$conn = new mysqli($servername, $username, $password, $database);
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 ?>
