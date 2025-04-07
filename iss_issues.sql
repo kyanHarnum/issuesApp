@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2025 at 11:51 PM
+-- Generation Time: Apr 07, 2025 at 05:53 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,10 +45,7 @@ CREATE TABLE `iss_issues` (
 --
 
 INSERT INTO `iss_issues` (`id`, `short_desc`, `long_desc`, `open_date`, `close_date`, `priority`, `org`, `project`, `per_id`, `status`) VALUES
-(0, 'Help', 'I need help', '2025-03-21', '2025-03-21', 'High', '', '0', 1, 'Resolved'),
-(0, 'b', 'b', '2025-03-21', '0000-00-00', 'Low', '', '0', 1, 'Open'),
-(0, 'c', 'c', '2025-03-21', '0000-00-00', 'Medium', '', '0', 1, 'Open'),
-(0, 'd', 'd', '2025-03-21', '0000-00-00', 'High', '', '0', 1, 'Open');
+(0, 'HELP', 'FF', '2025-04-07', '0000-00-00', 'High', '', 'WTF', 2, 'Open');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
