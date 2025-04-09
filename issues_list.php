@@ -1,5 +1,6 @@
 <?php
 session_start();
+$currentUserId = $_SESSION['user_id'];
 $is_admin = ($_SESSION['user_admin'] === 'Yes');
 require 'database.php';
 
@@ -77,7 +78,7 @@ $result = $conn->query($query);
 
                     <?php endif; ?>
 
-                    <button class="action-btn comment-btn" onclick="showCommentForm(<?php echo $row['id']; ?>)">Comment</button>
+                 <!--   <button class="action-btn comment-btn" onclick="showCommentForm(<?php echo $row['id']; ?>)">Comment</button> -->
 
                 </td>
             </tr>
