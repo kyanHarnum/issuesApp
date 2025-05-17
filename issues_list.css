@@ -153,3 +153,18 @@ table { width: 100%; border-collapse: collapse; }
     border-radius: 4px;
     cursor: pointer;
 }
+
+.btn-manage-users {
+    display: inline-block;
+    background-color: #6c63ff;
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-manage-users:hover {
+    background-color: #574fd6;
+}

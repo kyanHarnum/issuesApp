@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 05:52 PM
+-- Generation Time: May 17, 2025 at 07:51 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,7 @@ CREATE TABLE `iss_persons` (
 
 INSERT INTO `iss_persons` (`id`, `fname`, `lname`, `mobile`, `email`, `pwd_hash`, `pwd_salt`, `admin`) VALUES
 (1, 'Kyan', 'Harnum', '9073886645', 'kyan79@outlook.com', '15f43adea8be151886f10f648ab0c0b5', 'little', 'Yes'),
-(2, 'test', 't', '9078888888', 'test@outlook.com', '15f43adea8be151886f10f648ab0c0b5', 'little', 'No'),
-(3, 'test', 't', '9078888888', 'test@outlook.com', '15f43adea8be151886f10f648ab0c0b5', 'little', 'No');
+(2, 'test', 't', '9078888888', 'test@outlook.com', '15f43adea8be151886f10f648ab0c0b5', 'little', 'No');
 
 --
 -- Indexes for dumped tables

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 05:53 PM
+-- Generation Time: May 17, 2025 at 07:51 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,28 @@ CREATE TABLE `iss_issues` (
 --
 
 INSERT INTO `iss_issues` (`id`, `short_desc`, `long_desc`, `open_date`, `close_date`, `priority`, `org`, `project`, `per_id`, `status`) VALUES
-(0, 'HELP', 'FF', '2025-04-07', '0000-00-00', 'High', '', 'WTF', 2, 'Open');
+(6, 'Kyan Admin', 'The admin account created this', '2025-05-16', '0000-00-00', 'Low', '', 'Admin', 1, 'Open'),
+(7, 'Test Made this', 'Test created this issue', '2025-05-16', '0000-00-00', 'Low', '', 'Admin', 2, 'Open');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `iss_issues`
+--
+ALTER TABLE `iss_issues`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `iss_issues`
+--
+ALTER TABLE `iss_issues`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
